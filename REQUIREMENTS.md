@@ -147,13 +147,13 @@ Users (id: SERIAL PRIMARY KEY,
 ### Orders
 ```sql
 Orders (id: SERIAL PRIMARY KEY,
-       user_id: varchar NOT NULL [foreign key to users table],
+       user_id: int NOT NULL [foreign key to users table],
        status: varchar NOT NULL)
 ```
 ### OrderProducts
 ```sql
 Orders (id: SERIAL PRIMARY KEY,
-       order_id: varchar NOT NULL [foreign key to orders table],
-       product_id: varchar NOT NULL [foreign key to products table],
+       order_id: int NOT NULL [foreign key to orders table],
+       product_id: int NOT NULL [foreign key to products table],
        quantity int NOT NULL)
 ```
