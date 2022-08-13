@@ -40,3 +40,120 @@ These are the notes from a meeting with the frontend developer that describe wha
 - user_id
 - status of order (active or complete)
 
+
+
+
+## API Endpoints
+## Products
+### Index:
+
+```http
+  GET /api/products
+```
+
+
+### Show:
+
+```http
+  GET /api/products/:id
+```
+
+| Parameter | Type     | Description                          |
+| :-------- | :------- | :----------------------------------- |
+| `id`      | `string` | **Required**. Id of product to fetch |
+
+### Create **`[token required]`** :
+
+```http
+  POST /api/products
+```
+
+### [OPTIONAL] Get Top 5 most popular products :
+
+```http
+  GET /api/products/top
+```
+### [OPTIONAL] Get Products by category (args: product category)  :
+
+```http
+  POST /api/products/:category
+```
+
+| Parameter | Type     | Description                                 |
+| :-------- | :------- | :------------------------------------------ |
+| `id`      | `string` | **Required**. Id of product to fetch        |
+| `category`| `string` | **Required**. category of products to fetch |
+
+
+## Users
+### Index **`[token required]`** :
+
+```http
+  GET /api/users
+```
+### Show **`[token required]`** :
+
+```http
+  GET /api/users/:id'
+```
+
+| Parameter | Type     | Description                          |
+| :-------- | :------- | :----------------------------------- |
+| `id`      | `string` | **Required**. Id of user to fetch    |
+
+### Create **`[token required]`** :
+
+```http
+  POST /api/users
+```
+
+## Orders
+### Current Order by user (args: user id) **`[token required]`** :
+```http
+  GET /api/orders/cart/:user_id'
+```
+
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `user_id` | `string` | **Required**. Id of user to fetch      |
+
+### [OPTIONAL] Completed Orders by user (args: user id) **`[token required]`** :
+```http
+  GET /api/orders/:user_id'
+```
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `user_id` | `string` | **Required**. Id of user to fetch    
+
+
+
+## Database Design
+![Alt text](docs/storefront_erd.png?raw=true "Flow Chart")
+### Products
+```sql
+Products (id: SERIAL PRIMARY KEY,
+          name: varchar NOT NULL,
+          price: float NOT NULL,
+          category: varchar)
+```
+### Users
+```sql
+Users (id: SERIAL PRIMARY KEY,
+       username: varchar NOT NULL,
+       first_name: varchar NOT NULL,
+       last_name: varchar NOT NULL,
+       password: varchar NOT NULL)
+```
+### Orders
+```sql
+Orders (id: SERIAL PRIMARY KEY,
+       user_id: varchar NOT NULL [foreign key to users table],
+       status: varchar NOT NULL)
+```
+### OrderProducts
+```sql
+Orders (id: SERIAL PRIMARY KEY,
+       order_id: varchar NOT NULL [foreign key to orders table],
+       product_id: varchar NOT NULL [foreign key to products table],
+       quantity int NOT NULL)
+```
