@@ -109,4 +109,32 @@ describe('Order Model tests', () => {
             return result.rows;
         });
     });
+
+    describe('currentOrder method tests', () => {
+        const activeOrder: Order = {
+            id: 1,
+            user_id: '1',
+            status: 'active'
+        };
+        beforeAll(async () => {
+            const conn = await client.connect();
+            const query = 'INSERT INTO orders (user_id, status) VALUES ($1, $2) RETURNING *;';
+            const result = await conn.query(query, [order.user_id, order.status]);
+            conn.release();
+        });
+        it('should have a currentOrder method', () => {
+            expect(store.update).toBeDefined();
+        });
+        it('currentOrder method should show orders with active status and current user_id', async () => {
+            const result = await store.currentOrder(activeOrder.user_id);
+            expect(result.status).toBe(activeOrder.status);
+        });
+        afterAll(async () => {
+            const conn = await client.connect();
+            const query = `DELETE FROM orders; ALTER SEQUENCE orders_id_seq RESTART WITH 1;`;
+            const result = await conn.query(query);
+            conn.release();
+            return result.rows;
+        });
+    });
 });

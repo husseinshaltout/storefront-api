@@ -43,21 +43,26 @@ const create = async (req: Request, res: Response) => {
     try {
         const newUser = await store.create(user);
         // Creating tokens and returning it to the client side
-        var token = jwt.sign({ user: newUser }, secret);
+        const token = jwt.sign({ user: newUser }, secret);
         res.json(token);
     } catch (err) {
         res.status(400);
-        res.json(err + user);
+        res.json(err);
     }
 };
 
 const login = async (req: Request, res: Response) => {
-    const userAuth = await store.authenticate(req.body.username, req.body.password);
-    if (userAuth) {
-        var token = jwt.sign({ user: userAuth }, secret);
-        res.json(token);
-    } else {
-        res.json(userAuth);
+    try {
+        const userAuth = await store.authenticate(req.body.username, req.body.password);
+        if (userAuth) {
+            const token = jwt.sign({ user: userAuth }, secret);
+            res.json(token);
+        } else {
+            res.status(401);
+            res.json(userAuth);
+        }
+    } catch (err) {
+        res.json(err);
     }
 };
 
