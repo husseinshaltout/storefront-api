@@ -67,13 +67,13 @@ export class OrderStore {
         }
     }
     // current order by user
-    async completedOrders(user_id: string): Promise<Order> {
+    async completedOrders(user_id: string): Promise<Order[]> {
         try {
             const conn = await client.connect();
             const query = `SELECT * FROM orders WHERE user_id=($1) and status = 'complete';`;
             const result = await conn.query(query, [user_id]);
             conn.release();
-            return result.rows[0];
+            return result.rows;
         } catch (err) {
             throw new Error(`Cannot update order: ${err}`);
         }

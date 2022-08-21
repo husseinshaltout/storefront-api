@@ -71,17 +71,42 @@ describe('Orders endpoint test suite', () => {
         expect(response.body.user_id).toEqual(order.user_id);
         expect(response.body.status).toEqual(order.status);
     });
-    xit('should show products by catergory', async () => {
+    it('should show current order', async () => {
         const response = await request
-            .get(`/orders/category/Food`)
-            .set('Content-type', 'application/json');
+            .get(`/orders/cart`)
+            .set('Content-type', 'application/json')
+            .set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
         // expect(response.body[0].name).toEqual(order.name);
-        // expect(response.body[0]).toEqual({
-        //     id: order.id,
-        //     name: order.name,
-        //     price: order.price,
-        //     category: order.category
-        // });
+        expect(response.body).toEqual({
+            id: order.id,
+            user_id: order.user_id,
+            status: 'active'
+        });
+    });
+    it('should update an order', async () => {
+        const response = await request
+            .post(`/orders/update/${order.id}`)
+            .set('Content-type', 'application/json')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                status: 'complete'
+            });
+        expect(response.status).toBe(200);
+        expect(response.body.user_id).toEqual(order.user_id);
+        expect(response.body.status).toEqual('complete');
+    });
+    it('should show complete order', async () => {
+        const response = await request
+            .get(`/orders/complete`)
+            .set('Content-type', 'application/json')
+            .set('Authorization', `Bearer ${token}`);
+        expect(response.status).toBe(200);
+        // expect(response.body[0].name).toEqual(order.name);
+        expect(response.body[0]).toEqual({
+            id: order.id,
+            user_id: order.user_id,
+            status: 'complete'
+        });
     });
 });
