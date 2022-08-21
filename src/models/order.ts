@@ -79,13 +79,13 @@ export class OrderStore {
         }
     }
 
-    async order(id: number): Promise<Order> {
+    async orderDetails(id: number): Promise<Order[]> {
         try {
             const conn = await client.connect();
             const query = `SELECT order_products.id, name, price, order_products.quantity  FROM products INNER JOIN order_products ON products.id=order_products.product_id where order_products.order_id=($1);`;
             const result = await conn.query(query, [id]);
             conn.release();
-            return result.rows[0];
+            return result.rows;
         } catch (err) {
             throw new Error(`Cannot update order: ${err}`);
         }
