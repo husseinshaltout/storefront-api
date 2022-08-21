@@ -4,10 +4,10 @@
   "description": "A shopping application API.",
   "main": "server.ts",
   "scripts": {
-    "start": "node src/server.ts",
+    "start": "npm run build && node ./dist/server.js",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "test": "export ENV=test && db-migrate reset --env test && db-migrate --env test up && jasmine-ts --config=spec/support/jasmine.json",
-    "build": "npx tsc",
+    "build": "npm run clean && npx tsc",
     "tsc": "tsc",
     "migrate": "db-migrate --env test up && db-migrate up",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}'",
