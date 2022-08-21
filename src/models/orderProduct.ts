@@ -23,7 +23,7 @@ export class OrderProductsStore {
     async show(id: string): Promise<OrderProducts> {
         try {
             const conn = await client.connect();
-            const query = `SELECT * FROM order_products where id='${id}';`;
+            const query = `SELECT * FROM order_products WHERE id='${id}';`;
             const result = await conn.query(query);
             conn.release();
             return result.rows[0];

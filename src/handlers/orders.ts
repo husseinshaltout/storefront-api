@@ -84,12 +84,12 @@ const completedOrders = async (req: Request, res: Response) => {
     }
 };
 const orders_routes = (app: express.Application) => {
+    app.get('/orders/cart', verifyAuthToken, currentOrder);
+    app.get('/orders/complete', verifyAuthToken, completedOrders);
     app.get('/orders', index);
     app.get('/orders/:id', show);
     app.post('/orders/create', verifyAuthToken, create);
     app.post('/orders/update/:id', verifyAuthToken, update);
-    app.get('/orders/cart', verifyAuthToken, currentOrder);
-    app.get('/orders/complete', verifyAuthToken, completedOrders);
 };
 
 export default orders_routes;

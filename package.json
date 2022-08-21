@@ -46,6 +46,8 @@
     "jasmine-ts": "^0.4.0",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
+    "superset": "^2.0.1",
+    "supertest": "^6.2.4",
     "ts-node": "^10.9.1",
     "tsc-watch": "^4.2.9"
   }

@@ -42,8 +42,14 @@ const create = async (req: Request, res: Response) => {
     };
     try {
         const newUser = await store.create(user);
+        const tokenPayload = {
+            id: newUser.id,
+            username: newUser.username,
+            first_name: newUser.first_name,
+            last_name: newUser.last_name
+        };
         // Creating tokens and returning it to the client side
-        const token = jwt.sign({ user: newUser }, secret);
+        const token = jwt.sign({ user: tokenPayload }, secret);
         res.json(token);
     } catch (err) {
         res.status(400);
@@ -54,8 +60,14 @@ const create = async (req: Request, res: Response) => {
 const login = async (req: Request, res: Response) => {
     try {
         const userAuth = await store.authenticate(req.body.username, req.body.password);
+        const tokenPayload = {
+            id: userAuth?.id,
+            username: userAuth?.username,
+            first_name: userAuth?.first_name,
+            last_name: userAuth?.last_name
+        };
         if (userAuth) {
-            const token = jwt.sign({ user: userAuth }, secret);
+            const token = jwt.sign({ user: tokenPayload }, secret);
             res.json(token);
         } else {
             res.status(401);

@@ -22,7 +22,7 @@ export class OrderStore {
     async show(id: number): Promise<Order> {
         try {
             const conn = await client.connect();
-            const query = `SELECT * FROM orders where id='${id}'`;
+            const query = `SELECT * FROM orders WHERE id='${id}'`;
             const result = await conn.query(query);
             conn.release();
             return result.rows[0];
@@ -58,7 +58,7 @@ export class OrderStore {
     async currentOrder(user_id: string): Promise<Order> {
         try {
             const conn = await client.connect();
-            const query = `SELECT * FROM orders where user_id=($1) and status = 'active'`;
+            const query = `SELECT * FROM orders WHERE user_id=($1) and status = 'active';`;
             const result = await conn.query(query, [user_id]);
             conn.release();
             return result.rows[0];
@@ -70,8 +70,20 @@ export class OrderStore {
     async completedOrders(user_id: string): Promise<Order> {
         try {
             const conn = await client.connect();
-            const query = `SELECT * FROM orders where user_id=($1) and status = 'complete'`;
+            const query = `SELECT * FROM orders WHERE user_id=($1) and status = 'complete';`;
             const result = await conn.query(query, [user_id]);
+            conn.release();
+            return result.rows[0];
+        } catch (err) {
+            throw new Error(`Cannot update order: ${err}`);
+        }
+    }
+
+    async order(id: number): Promise<Order> {
+        try {
+            const conn = await client.connect();
+            const query = `SELECT order_products.id, name, price, order_products.quantity  FROM products INNER JOIN order_products ON products.id=order_products.product_id where order_products.order_id=($1);`;
+            const result = await conn.query(query, [id]);
             conn.release();
             return result.rows[0];
         } catch (err) {
