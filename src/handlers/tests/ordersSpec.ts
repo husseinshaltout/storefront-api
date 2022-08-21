@@ -77,7 +77,6 @@ describe('Orders endpoint test suite', () => {
             .set('Content-type', 'application/json')
             .set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
-        // expect(response.body[0].name).toEqual(order.name);
         expect(response.body).toEqual({
             id: order.id,
             user_id: order.user_id,
@@ -102,7 +101,6 @@ describe('Orders endpoint test suite', () => {
             .set('Content-type', 'application/json')
             .set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
-        // expect(response.body[0].name).toEqual(order.name);
         expect(response.body[0]).toEqual({
             id: order.id,
             user_id: order.user_id,

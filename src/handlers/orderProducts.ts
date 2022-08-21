@@ -1,9 +1,7 @@
 import express, { Request, Response } from 'express';
 import { OrderProducts, OrderProductsStore } from '../models/orderProduct';
-import jwt, { JwtPayload } from 'jsonwebtoken';
 import verifyAuthToken from '../middleware/authTokenVerification';
 
-const secret = process.env.TOKEN_SECRET as string;
 const store = new OrderProductsStore();
 
 const index = async (req: Request, res: Response) => {
