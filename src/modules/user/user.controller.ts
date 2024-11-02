@@ -8,6 +8,7 @@ class UserController {
             const users = await userService.getAllUsers();
             res.status(200).json(users);
         } catch (error) {
+            console.error(error);
             throw new Error(`Unable to get all users: ${error}`);
         }
     }
@@ -18,6 +19,7 @@ class UserController {
             const user = await userService.getUserById(userId);
             res.status(200).json(user);
         } catch (error) {
+            console.error(error);
             res.status(404).json(error);
         }
     }
@@ -29,12 +31,13 @@ class UserController {
             first_name: req.body?.first_name,
             last_name: req.body?.last_name
         };
-
         try {
             const newUser = await userService.create(user);
             res.status(200).json(newUser);
         } catch (error) {
-            res.status(400).json(error);
+            console.error(error);
+            res.status(400);
+            res.json(error);
         }
     }
 
@@ -48,6 +51,7 @@ class UserController {
                 res.status(401).json(userAuth);
             }
         } catch (error) {
+            console.error(error);
             res.status(401).json(error);
         }
     }
