@@ -35,3 +35,16 @@ app.listen(PORT, function () {
 });
 
 export default app;
+
+/* post refactoring server
+import { DBLoader } from './loaders/database';
+import ServerLoader from './loaders/server';
+import app from './modules';
+
+const database = DBLoader.getInstance();
+
+const server = new ServerLoader(app, database);
+
+server.start();
+
+*/
