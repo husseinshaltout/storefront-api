@@ -9,10 +9,10 @@ class UserRouter {
     }
 
     private initializeRoutes() {
-        this.router.get('/', verifyAuthToken, userController.getAllUsers.bind(userController));
+        this.router.get('', verifyAuthToken, userController.getAllUsers.bind(userController));
         this.router.get(':id', userController.getUserById.bind(userController));
-        this.router.post('/', userController.create.bind(userController));
-        this.router.post('login', userController.login.bind(userController));
+        this.router.post('', userController.create.bind(userController));
+        this.router.post('/login', userController.login.bind(userController));
     }
 }
 
