@@ -9,8 +9,8 @@ type appRouter = { route: string; router: express.Router };
 
 const appRouters: appRouter[] = [
     { route: '/users', router: userRouter.router },
-    { route: '/products', router: productRouter.router }
-    {route: '/orders', router: orderRouter.router}
+    { route: '/products', router: productRouter.router },
+    { route: '/orders', router: orderRouter.router }
 ];
 
 const app = new Application();
