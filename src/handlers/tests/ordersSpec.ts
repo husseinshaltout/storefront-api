@@ -1,12 +1,14 @@
 import supertest from 'supertest';
-import app from '../../server';
+import app from '../../modules';
 import client from '../../database';
 import { Order, OrderStore } from '../../models/order';
 import { User, UserStore } from '../../models/user';
+
 const request = supertest(app);
 const userModel = new UserStore();
 const orderModel = new OrderStore();
 let token = '';
+
 describe('Orders endpoint test suite', () => {
     const user: User = {
         username: 'test',

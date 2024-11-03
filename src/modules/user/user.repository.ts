@@ -53,7 +53,7 @@ class UserRepository {
 
     async findOneByUsername(username: string): Promise<User | null> {
         try {
-            const sql = `SELECT password FROM users WHERE username = '${username}';`;
+            const sql = `SELECT *  FROM users WHERE username = '${username}';`;
             const result = await this.client.query(sql);
 
             if (result.rows.length) return result.rows[0];

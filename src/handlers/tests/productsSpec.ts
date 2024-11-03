@@ -1,12 +1,14 @@
 import supertest from 'supertest';
-import app from '../../server';
+import app from '../../modules';
 import client from '../../database';
 import { Product, ProductStore } from '../../models/product';
 import { User, UserStore } from '../../models/user';
+
 const request = supertest(app);
 const userModel = new UserStore();
 const productModel = new ProductStore();
 let token = '';
+
 describe('Products endpoint test suite', () => {
     const user: User = {
         username: 'test',

@@ -1,12 +1,14 @@
 import supertest from 'supertest';
-import app from '../../server';
+import app from '../../modules';
 import client from '../../database';
 import { User, UserStore } from '../../models/user';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+
 const request = supertest(app);
 const store = new UserStore();
 const secret = process.env.TOKEN_SECRET as string;
 let token = '';
+
 describe('Users endpoint test suite', () => {
     const user: User = {
         username: 'test',

@@ -25,13 +25,14 @@ class UserController {
     }
 
     async create(req: Request, res: Response) {
-        const user: User = {
-            username: req.body?.username,
-            password: req.body?.password,
-            first_name: req.body?.first_name,
-            last_name: req.body?.last_name
-        };
         try {
+            const user: User = {
+                username: req.body?.username,
+                password: req.body?.password,
+                first_name: req.body?.firstName,
+                last_name: req.body?.lastName
+            };
+
             const newUser = await userService.create(user);
             res.status(200).json(newUser);
         } catch (error) {

@@ -1,8 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import config from '../../config';
 
-const secret = process.env.TOKEN_SECRET as string;
-// Reference : https://github.com/omargaber/ndjs-examples/blob/master/april_22/w6/src/middleware/global.ts
+export type TokenPayload = {
+    id: number;
+    username: string;
+    first_name: string;
+    last_name: string;
+};
+
 const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
     try {
         const authHeader = req.headers.authorization as string;
@@ -13,7 +19,10 @@ const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
 
         const token = authHeader.split(' ')[1];
 
-        const decoded = jwt.verify(token, secret);
+        const decoded = jwt.verify(token, config.AUTH.SECRET) as TokenPayload;
+
+        req.user = decoded;
+
         next();
     } catch (err) {
         res.status(401);
