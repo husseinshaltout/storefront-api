@@ -25,12 +25,12 @@ class OrderController {
     }
 
     async create(req: Request, res: Response) {
-        const order: Order = {
-            user_id: req.user?.id.toString(),
-            status: req.body?.status
-        };
-
         try {
+            const order: Order = {
+                user_id: req.user?.id.toString(),
+                status: req.body?.status
+            };
+
             const newOrder = await orderService.create(order);
             res.status(201).json(newOrder);
         } catch (error) {
