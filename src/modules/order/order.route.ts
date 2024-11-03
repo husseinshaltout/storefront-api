@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import verifyAuthToken from '../../middleware/authTokenVerification';
+import verifyAuthToken from '../../common/middleware/authTokenVerification';
 import orderController from './order.controller';
 
 class OrderRouter {

@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { Order, OrderStore } from '../models/order';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import verifyAuthToken from '../middleware/authTokenVerification';
+import verifyAuthToken from '../common/middleware/authTokenVerification';
 
 const secret = process.env.TOKEN_SECRET as string;
 const store = new OrderStore();
