@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "start": "npm run build && node ./dist/server.js",
-    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
+    "watch": "tsc-watch --esModuleInterop --onSuccess \"node ./dist/server.js\"",
     "test": "export ENV=test && db-migrate reset --env test && db-migrate --env test up && jasmine-ts --config=spec/support/jasmine.json",
     "build": "npm run clean && npx tsc",
     "tsc": "tsc",
