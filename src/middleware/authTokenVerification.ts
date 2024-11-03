@@ -5,6 +5,8 @@ import config from '../config';
 export type TokenPayload = {
     id: number;
     username: string;
+    first_name: string;
+    last_name: string;
 };
 
 const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
