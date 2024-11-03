@@ -29,11 +29,15 @@ class UserService {
             last_name: user.last_name
         };
 
-        return jwt.sign({ user: tokenPayload }, config.AUTH.SECRET);
+        return jwt.sign(tokenPayload, config.AUTH.SECRET);
     }
 
     async create(user: User) {
         try {
+            const userExists = await userRepository.findOneByUsername(user.username);
+
+            if (userExists) throw new Error('Username already exists');
+
             const hash = bcrypt.hashSync(
                 user.password + config.AUTH.PEPPER,
                 parseInt(config.AUTH.SALT_ROUNDS)
@@ -51,9 +55,10 @@ class UserService {
             const accessToken = this.signToken(newUser);
 
             return {
+                id: newUser?.id,
                 username: newUser.username,
-                first_name: newUser.first_name,
-                last_name: newUser.last_name,
+                firstName: newUser.first_name,
+                lastName: newUser.last_name,
                 accessToken
             };
         } catch (error) {
@@ -67,7 +72,13 @@ class UserService {
 
             if (!user) return null;
 
-            return this.signToken(user);
+            return {
+                id: user.id,
+                username: user.username,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                accessToken: this.signToken(user)
+            };
         } catch (error) {
             throw new Error(`Unable to login user: ${error}`);
         }
